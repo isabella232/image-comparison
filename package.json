@@ -1,0 +1,23 @@
+{
+  "name": "image-comparison",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marcelblanarik/image-comparison.git"
+  },
+  "author": "Marcel Blanarik",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/marcelblanarik/image-comparison/issues"
+  },
+  "homepage": "https://github.com/marcelblanarik/image-comparison#readme",
+  "dependencies": {
+    "pixelmatch": "^5.1.0",
+    "pngjs": "^3.4.0"
+  }
+}
