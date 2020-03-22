@@ -29,11 +29,10 @@ fs.readdir(sourceImages, function(err, files) {
         }
       );
 
-      if (!fs.existsSync(diffImages)) {
-        fs.mkdirSync(diffImages);
-      }
-
       if (difference) {
+        if (!fs.existsSync(diffImages)) {
+          fs.mkdirSync(diffImages);
+        }
         fs.writeFileSync(`${diffImages}/${file}`, PNG.sync.write(diff));
       }
 
