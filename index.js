@@ -12,28 +12,32 @@ fs.readdir(sourceImages, function(err, files) {
     return console.log("Unable to scan directory: " + err);
   }
   files.forEach(function(file) {
-    const img1 = PNG.sync.read(fs.readFileSync(`${sourceImages}/${file}`));
-    const img2 = PNG.sync.read(fs.readFileSync(`${destImages}/${file}`));
-    const { width, height } = img1;
-    const diff = new PNG({ width, height });
+    if (path.extname(file) === ".png") {
+      const img1 = PNG.sync.read(fs.readFileSync(`${sourceImages}/${file}`));
+      const img2 = PNG.sync.read(fs.readFileSync(`${destImages}/${file}`));
+      const { width, height } = img1;
+      const diff = new PNG({ width, height });
 
-    const difference = pixelmatch(
-      img1.data,
-      img2.data,
-      diff.data,
-      width,
-      height,
-      {
-        threshold: 0
+      const difference = pixelmatch(
+        img1.data,
+        img2.data,
+        diff.data,
+        width,
+        height,
+        {
+          threshold: 0
+        }
+      );
+
+      if (!fs.existsSync(diffImages)) {
+        fs.mkdirSync(diffImages);
       }
-    );
 
-    if (!fs.existsSync(diffImages)) {
-      fs.mkdirSync(diffImages);
-    }
+      if (difference) {
+        fs.writeFileSync(`${diffImages}/${file}`, PNG.sync.write(diff));
+      }
 
-    if (difference) {
-      fs.writeFileSync(`${diffImages}/${file}`, PNG.sync.write(diff));
+      console.log(`${file}: ${difference} pixels different`);
     }
   });
 });
